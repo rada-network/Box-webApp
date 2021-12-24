@@ -1,0 +1,15 @@
+{
+  "arrowParens": "always",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": false,
+  "printWidth": 100,
+  "singleQuote": true,
+  "parser": "flow",
+  "endOfLine":"auto",
+  "no-undef": 1,
+  "no-unused-vars": "warn",
+  "react/prop-types": "warn"
+}

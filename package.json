@@ -1,0 +1,59 @@
+{
+  "name": "nft.rada.network",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.6.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/icons-material": "^5.1.0",
+    "@mui/lab": "^5.0.0-alpha.53",
+    "@mui/material": "^5.1.1",
+    "@mui/styles": "^5.0.2",
+    "@mui/x-data-grid": "^5.0.1",
+    "@usedapp/core": "^0.6.3",
+    "@web3-react/walletconnect-connector": "^6.2.8",
+    "date-fns": "^2.27.0",
+    "react": "^17.0.2",
+    "react-copy-to-clipboard": "^5.0.4",
+    "react-dom": "^17.0.2",
+    "react-papaparse": "^3.18.1",
+    "react-router-dom": "^6.0.2",
+    "react-toastify": "^8.1.0",
+    "sass": "^1.44.0",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "start": "NODE_ENV=development react-scripts start",
+    "build": "NODE_ENV=production react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.5",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.27.1",
+    "prettier": "^2.5.1",
+    "react-scripts": "4.0.3"
+  }
+}

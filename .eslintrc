@@ -1,0 +1,29 @@
+{
+  "env": {
+      "browser": true,
+      "es6": true
+  },
+  "extends": ["react-app", "prettier", "plugin:react/recommended"],
+  "plugins": ["react", "prettier"],
+  "parserOptions": {
+      "ecmaVersion": 2018
+  },
+  "rules": {
+      "prettier/prettier": [
+          "error",
+          {
+            "printWidth": 80,
+            "trailingComma": "es5",
+            "semi": false,
+            "singleQuote": true,
+            "no-mixed-spaces-and-tabs": ["error", "smart-tabs"]
+          }
+      ],
+      "no-unused-vars": "warn",
+      "react/prop-types": "warn",
+      "no-undef": 1,
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error",
+      "react/react-in-jsx-scope": "off"
+  }
+}
