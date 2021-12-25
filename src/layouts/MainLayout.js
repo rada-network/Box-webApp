@@ -99,7 +99,7 @@ export default function MainLayout({ children }) {
             </Container>
           )}
 
-          {chainId === configUseDapp.readOnlyChainId &&
+          {/* {chainId === configUseDapp.readOnlyChainId &&
           global.network &&
           global.chainId ? (
             <Container maxWidth="md" sx={{ mt: 3, mb: 3 }}>
@@ -118,7 +118,7 @@ export default function MainLayout({ children }) {
             </Box>
           ) : (
             <div />
-          )}
+          )} */}
         </Box>
 
         {/* {!global.network ||
