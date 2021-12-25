@@ -90,17 +90,19 @@ function App() {
 
   //const supportedChains = process.env.NODE_ENV === 'production' ? [ChainId.BSC] : [ChainId.BSCTestnet]
   const supportedChains = [ChainId.BSCTestnet]
+  const configApp = {
+    readOnlyChainId: ChainId.BSCTestnet,
+    /* readOnlyUrls: {
+      [ChainId.BSCTestnet]: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+    }, */
+    notifications: {
+      expirationPeriod: 1000,
+      checkInterval: 1000,
+    },
+  }
 
   return (
-    <DAppProvider
-      config={{
-        supportedChains: supportedChains,
-        notifications: {
-          expirationPeriod: 1000,
-          checkInterval: 1000,
-        },
-      }}
-    >
+    <DAppProvider config={configApp}>
       <ProvideGlobal colorMode={colorMode}>
         <BrowserRouter>
           <ThemeProvider theme={theme}>

@@ -5,13 +5,14 @@ import { createContext, useContext, useState } from 'react'
 import { ChainId, useEthers } from '@usedapp/core'
 
 import config from 'config'
+import network from 'config/network.json'
 
 const globalContext = createContext()
 
 const ProvideGlobal = ({ colorMode, children }) => {
   const [loading, setLoading] = useState(false)
   const [loadingMessage, setLoadingMessage] = useState('')
-  const [network, setNetwork] = useState(null)
+  // const [network, setNetwork] = useState(null)
 
   const supportedChains =
     process.env.NODE_ENV === 'production' ? [ChainId.BSC] : [ChainId.BSCTestnet]
@@ -26,7 +27,7 @@ const ProvideGlobal = ({ colorMode, children }) => {
     return 'Connecting...'
   } */
 
-  const getData = () => {
+  /* const getData = () => {
     fetch(config.configUrl, {
       headers: {
         'Content-Type': 'application/json',
@@ -45,7 +46,7 @@ const ProvideGlobal = ({ colorMode, children }) => {
 
   useEffect(() => {
     getData()
-  }, [])
+  }, []) */
 
   // console.log('ProvideGlobal render', loading)
   return (

@@ -15,7 +15,8 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import { isMobile } from 'react-device-detect'
+
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
@@ -225,17 +226,19 @@ export default function Header() {
             textAlign: 'center',
           }}
         >
-          <Button
-            sx={{
-              width: 230,
-            }}
-            color="primary"
-            variant="outlined"
-            size="large"
-            onClick={() => handleChooseWallet('metaMask')}
-          >
-            <img src={MetaMaskLogo} alt="MetaMask" /> MetaMask
-          </Button>
+          {!isMobile && (
+            <Button
+              sx={{
+                width: 230,
+              }}
+              color="primary"
+              variant="outlined"
+              size="large"
+              onClick={() => handleChooseWallet('metaMask')}
+            >
+              <img src={MetaMaskLogo} alt="MetaMask" /> MetaMask
+            </Button>
+          )}
           <Box sx={{ m: 1 }} />
           <Button
             sx={{

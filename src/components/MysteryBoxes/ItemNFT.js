@@ -56,9 +56,10 @@ const ItemNFT = ({ itemNFT, priceBox, network }) => {
           {metaData ? (
             <>
               <Grid item textAlign="center">
-                <Avatar
+                <img
+                  alt=""
                   src={metaData.image}
-                  style={{ margin: 'auto', width: 200, height: 200 }}
+                  style={{ margin: 'auto', maxWidth: '100%', height: 150 }}
                 />
               </Grid>
               <Grid item textAlign="center">

@@ -22,6 +22,7 @@ import { useGetBEP20 } from 'hooks/useCallBEP20'
 import { useGlobal } from 'providers/Global'
 import NFTModel from 'model/NFT'
 import ItemNFT from './ItemNFT'
+import { formatDate, fromUnixTime } from 'utils/format'
 
 import {
   useGetERC721,
@@ -301,6 +302,33 @@ export default function NFTList() {
       </Stack>
     )
   }
+  const nowTime = Math.floor(Date.now() / 1000)
+  if (context.startTime > nowTime) {
+    return (
+      <Stack
+        direction="row"
+        justifyContent="center"
+        spacing={2}
+        sx={{ marginBottom: '1rem' }}
+      >
+        <Box sx={{ display: 'inline-flex' }}>
+          <Alert severity="warning" xs={{ marginBottom: '1rem' }}>
+            The campaign not start yet.
+            <br />
+            Please wait to {formatDate(fromUnixTime(context.startTime))}{' '}
+          </Alert>
+        </Box>
+      </Stack>
+    )
+  }
+
+  console.log(global.network)
+  console.log(global.chainId, 'chainId')
+
+  const allowBuy =
+    context.endTime > nowTime &&
+    context.maxBuyPerAddress > context.totalBoxBought &&
+    context.totalSoldBoxes < context.totalBoxesForSell
 
   return (
     <>
@@ -326,40 +354,39 @@ export default function NFTList() {
         justifyContent={'center'}
         sx={{ marginBottom: 3 }}
       >
-        {context.maxBuyPerAddress > context.totalBoxBought &&
-          context.totalSoldBoxes < context.totalBoxesForSell && (
-            <Grid item xs={12} sm={6} lg={6}>
-              <Card>
-                <ItemNFT
-                  itemNFT={defaultBox}
-                  priceBox={context.priceBox}
-                  network={global.network}
-                />
-                <CardActions style={{ flex: 1, justifyContent: 'center' }}>
-                  {validEnableTokenPayment && (
-                    <>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={handleApprovePayment}
-                      >
-                        Enable {networkConfig.BUSDContract.name}
-                      </Button>
-                      <ArrowForwardIcon style={{ marginLeft: 10 }} />
-                    </>
-                  )}
-                  <Button
-                    color="secondary"
-                    variant="contained"
-                    disabled={!validBuy}
-                    onClick={handleBuyNow}
-                  >
-                    BUY NOW
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          )}
+        {allowBuy && (
+          <Grid item xs={12} sm={6} lg={6}>
+            <Card>
+              <ItemNFT
+                itemNFT={defaultBox}
+                priceBox={context.priceBox}
+                network={global.network}
+              />
+              <CardActions style={{ flex: 1, justifyContent: 'center' }}>
+                {validEnableTokenPayment && (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={handleApprovePayment}
+                    >
+                      Enable {networkConfig.BUSDContract.name}
+                    </Button>
+                    <ArrowForwardIcon style={{ marginLeft: 10 }} />
+                  </>
+                )}
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  disabled={!validBuy}
+                  onClick={handleBuyNow}
+                >
+                  BUY NOW
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        )}
       </Grid>
       <Grid
         container
@@ -383,7 +410,7 @@ export default function NFTList() {
                       color="secondary"
                       onClick={handleApproveBox(itemNFT.tokenId)}
                     >
-                      Enable {networkConfig.boxNftContract.name}
+                      Enable Box
                     </Button>
                     <ArrowForwardIcon style={{ marginLeft: 10 }} />
                   </>
@@ -411,7 +438,7 @@ export default function NFTList() {
                 priceBox={0}
                 network={global.network}
               />
-              <CardActions style={{ flex: 1, justifyContent: 'center' }}>
+              {/* <CardActions style={{ flex: 1, justifyContent: 'center' }}>
                 {!ticketApproveData[itemNFT.tokenId] && (
                   <>
                     <Button
@@ -425,8 +452,7 @@ export default function NFTList() {
                   </>
                 )}
                 <Button
-                  /* disabled={!ticketApproveData[itemNFT.tokenId]} */
-                  disabled
+                  disabled={!ticketApproveData[itemNFT.tokenId]}
                   onClick={handleClaim(itemNFT.tokenId)}
                   size="small"
                   variant="contained"
@@ -434,7 +460,7 @@ export default function NFTList() {
                 >
                   CLAIM NOW
                 </Button>
-              </CardActions>
+              </CardActions> */}
             </Card>
           </Grid>
         ))}

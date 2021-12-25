@@ -43,6 +43,8 @@ const ProvideMysteryBoxes = ({ children }) => {
     requireWhitelist: true,
     isAllow: true,
     totalBoxBought: 0,
+    startTime: 0,
+    endTime: 0,
   }
 
   const callData = {
@@ -89,65 +91,82 @@ const ProvideMysteryBoxes = ({ children }) => {
         ...callData,
         ...{ method: 'buyersBoxTotal', args: [global.account] },
       },
+      {
+        ...callData,
+        ...{ method: 'startTime', args: [] },
+      },
+      {
+        ...callData,
+        ...{ method: 'endTime', args: [] },
+      },
     ]
   }
 
   const contractChain = useContractCalls(chainArray).filter((a) => a) ?? []
 
-  if (contractChain.length < 7) {
+  if (contractChain.length < 10) {
     return ''
   }
-  console.log(contractChain)
-  contractChain.forEach((chain, i) => {
-    if (chain[0] !== undefined) {
-      switch (i) {
-        // admins
-        case 0:
-          provideValue.isAdmin = chain[0]
-          break
-        //whitelistAddresses
-        case 1:
-          provideValue.isAllow = chain[0]
-          break
-        //totalSoldBoxes
-        case 2:
-          provideValue.totalSoldBoxes = parseInt(formatUnits(chain[0], 0))
-          break
-        //totalOpenBoxes
-        case 3:
-          provideValue.totalOpenBoxes = parseInt(formatUnits(chain[0], 0))
-          break
-        //priceBox
-        case 4:
-          provideValue.priceBox = parseInt(formatUnits(chain[0], 18))
-          break
-        //maxBuyPerAddress
-        case 5:
-          provideValue.maxBuyPerAddress = parseInt(formatUnits(chain[0], 0))
-          break
-        //totalBoxesForSell
-        case 6:
-          provideValue.totalBoxesForSell = parseInt(
-            formatUnits(chain[0].toString(), 0)
-          )
-          break
-        //requireWhitelist
-        case 7:
-          provideValue.requireWhitelist = chain[0] === true
-          if (provideValue.requireWhitelist === false)
-            provideValue.isAllow = true
-          break
-        //buyersBoxTotal
-        case 8:
-          provideValue.totalBoxBought = parseInt(formatUnits(chain[0], 0))
-          break
-        default:
-          break
+  try {
+    contractChain.forEach((chain, i) => {
+      if (chain[0] !== undefined) {
+        switch (i) {
+          // admins
+          case 0:
+            provideValue.isAdmin = chain[0]
+            break
+          //whitelistAddresses
+          case 1:
+            provideValue.isAllow = chain[0]
+            break
+          //totalSoldBoxes
+          case 2:
+            provideValue.totalSoldBoxes = parseInt(formatUnits(chain[0], 0))
+            break
+          //totalOpenBoxes
+          case 3:
+            provideValue.totalOpenBoxes = parseInt(formatUnits(chain[0], 0))
+            break
+          //priceBox
+          case 4:
+            provideValue.priceBox = parseInt(formatUnits(chain[0], 18))
+            break
+          //maxBuyPerAddress
+          case 5:
+            provideValue.maxBuyPerAddress = parseInt(formatUnits(chain[0], 0))
+            break
+          //totalBoxesForSell
+          case 6:
+            provideValue.totalBoxesForSell = parseInt(
+              formatUnits(chain[0].toString(), 0)
+            )
+            break
+          //requireWhitelist
+          case 7:
+            provideValue.requireWhitelist = chain[0] === true
+            if (provideValue.requireWhitelist === false)
+              provideValue.isAllow = true
+            break
+          //buyersBoxTotal
+          case 8:
+            provideValue.totalBoxBought = parseInt(formatUnits(chain[0], 0))
+            break
+          //startTime
+          case 9:
+            provideValue.startTime = parseInt(formatUnits(chain[0], 0))
+            break
+          //endTime
+          case 10:
+            provideValue.endTime = parseInt(formatUnits(chain[0], 0))
+            break
+          default:
+            break
+        }
       }
-    }
-  })
-
-  console.log(provideValue)
+    })
+  } catch (err) {
+    console.log(err)
+  }
 
   return (
     <boxContext.Provider value={provideValue}>{children}</boxContext.Provider>

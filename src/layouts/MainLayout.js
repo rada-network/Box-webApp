@@ -9,14 +9,17 @@ import {
   Button,
   Alert,
   CircularProgress,
+  Stack,
 } from '@mui/material'
 import { Box } from '@mui/system'
 import { useGlobal } from 'providers/Global'
-// import { ChainId } from '@usedapp/core'
+import { useEthers, useConfig } from '@usedapp/core'
 
 export default function MainLayout({ children }) {
   const global = useGlobal()
-
+  const { active, chainId, deactivate } = useEthers()
+  // const { account, chainId, deactivate, error, active, library } = useEthers()
+  const configUseDapp = useConfig()
   // console.log('MainLayout render', global)
 
   /* const supportedChains =
@@ -25,9 +28,19 @@ export default function MainLayout({ children }) {
   const handleChangeNetwork = async () => {
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: `0x${global.supportedChains[0].toString(16)}` }], // chainId must be in hexadecimal numbers
+      params: [{ chainId: `0x${configUseDapp.readOnlyChainId.toString(16)}` }], // chainId must be in hexadecimal numbers
     })
   }
+  /* console.log(global.network)
+  console.log(chainId)
+  console.log(error)
+  console.log(active)
+  console.log(library)
+  console.log(account)
+  console.log(configUseDapp) */
+
+  console.log(chainId)
+  console.log(configUseDapp.readOnlyChainId)
 
   return (
     <>
@@ -43,15 +56,34 @@ export default function MainLayout({ children }) {
           }}
         >
           <Toolbar />
+          {chainId && chainId !== configUseDapp.readOnlyChainId && (
+            <Container maxWidth="xs" sx={{ mt: 3, mb: 3 }}>
+              <Alert color="warning">
+                Unsupported network, please change to network{' '}
+                {configUseDapp.readOnlyChainId}
+                <Button size="small" onClick={handleChangeNetwork}>
+                  Change
+                </Button>
+                {active && (
+                  <Button size="small" onClick={deactivate}>
+                    Disconnect
+                  </Button>
+                )}
+              </Alert>
+            </Container>
+          )}
           {global && global?.error && (
             <Container maxWidth="xs" sx={{ mt: 3, mb: 3 }}>
               <Alert color="warning">
                 {global?.error.message}
-                {global?.error?.name === 'UnsupportedChainIdError' && (
+                {global?.error?.name.indexOf('support') > -1 && (
                   <Button size="small" onClick={handleChangeNetwork}>
                     Change
                   </Button>
                 )}
+                <Button size="small" onClick={deactivate}>
+                  Disconnect
+                </Button>
               </Alert>
             </Container>
           )}
@@ -67,7 +99,9 @@ export default function MainLayout({ children }) {
             </Container>
           )}
 
-          {global.network && global.chainId ? (
+          {chainId === configUseDapp.readOnlyChainId &&
+          global.network &&
+          global.chainId ? (
             <Container maxWidth="md" sx={{ mt: 3, mb: 3 }}>
               {children}
             </Container>
@@ -86,6 +120,27 @@ export default function MainLayout({ children }) {
             <div />
           )}
         </Box>
+
+        {/* {!global.network ||
+          (!global.chainId && (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Alert severity="warning" xs={{ marginBottom: '1rem' }}>
+                Try refresh the browser if you {"don't"} see the content.{' '}
+                <Button
+                  size="small"
+                  onClick={() => window.location.reload(false)}
+                >
+                  Refresh
+                </Button>
+              </Alert>
+            </Box>
+          ))} */}
         <Notifications />
         {/* {global && global?.error && (
           <Snackbar

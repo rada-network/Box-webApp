@@ -13,7 +13,7 @@ const formatDate = (date) => {
     if (!(date instanceof Date)) {
       dt = parseISO(date)
     }
-    return `${format(dt, formatString)} GTM`
+    return `${format(dt, formatString)}`
   } catch (error) {
     return 'Invalid format'
   }
