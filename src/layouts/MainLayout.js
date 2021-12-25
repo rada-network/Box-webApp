@@ -99,26 +99,15 @@ export default function MainLayout({ children }) {
             </Container>
           )}
 
-          {/* {chainId === configUseDapp.readOnlyChainId &&
+          {chainId === configUseDapp.readOnlyChainId &&
           global.network &&
           global.chainId ? (
             <Container maxWidth="md" sx={{ mt: 3, mb: 3 }}>
               {children}
             </Container>
-          ) : !global?.error ? (
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 200,
-              }}
-            >
-              <CircularProgress />
-            </Box>
           ) : (
             <div />
-          )} */}
+          )}
         </Box>
 
         {/* {!global.network ||
