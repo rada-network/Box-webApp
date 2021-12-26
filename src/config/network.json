@@ -2,17 +2,12 @@
   "97": {
     "factoryContract": {
       "name": "Factory Contract",
-      "address": "0x6bBb5741a86cAC0eA9114493cA85Bf177f741FbE"
+      "address": "0xc3CDB0E92fb9594c007a5A030015C20F2caBf4C7"
     },
-    "boxNftContract": {
-      "name": "Mystery Box",
-      "address": "0x839Ef4925f169140211bf0B6ae441469ae70F900",
-      "baseURI": "https://nft.1alo.com/box/v1/"
-    },
-    "ticketNftContract": {
-      "name": "Ticket PRL",
-      "address": "0x2091A2C10C6242fFF11224D89FE3881f174B7F73",
-      "baseURI": "https://nft.1alo.com/prl/v1/"
+    "radaNftContract": {
+      "name": "Rada NFT",
+      "address": "0x24825D62d4658DA1d5cB517E2CB445D1A00F65C6",
+      "baseURI": "https://nft.1alo.com/rada/v1/"
     },
     "BUSDContract": {
       "name": "BUSD",

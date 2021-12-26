@@ -34,6 +34,7 @@ const useActionState = (actions) => {
 
   useEffect(() => {
     setLastAction(action)
+    setSuccess(false)
   }, [action])
 
   useEffect(() => {

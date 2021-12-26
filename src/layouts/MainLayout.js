@@ -39,9 +39,6 @@ export default function MainLayout({ children }) {
   console.log(account)
   console.log(configUseDapp) */
 
-  console.log(chainId)
-  console.log(configUseDapp.readOnlyChainId)
-
   return (
     <>
       <Box sx={{ display: 'flex' }}>
@@ -98,7 +95,6 @@ export default function MainLayout({ children }) {
               </Alert>
             </Container>
           )}
-
           {chainId === configUseDapp.readOnlyChainId &&
           global.network &&
           global.chainId ? (

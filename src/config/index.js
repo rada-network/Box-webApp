@@ -1,11 +1,13 @@
 const configDefault = {
   development: {
+    campaignId: 0,
     appName: 'Mystery Box - RADA.network',
     appUrl: 'http://localhost:3000',
     configUrl:
       'https://s3.ap-southeast-1.amazonaws.com/config.mixed.finance/network_3434ffsdf.json',
   },
   production: {
+    campaignId: 0,
     appName: 'Mystery Box - RADA.network',
     appUrl: 'https://box.1alo.com',
     configUrl:

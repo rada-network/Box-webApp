@@ -27,9 +27,9 @@ import { formatDate, fromUnixTime } from 'utils/format'
 import {
   useGetERC721,
   useOwnerTokenIds,
-  useGetApproveNft,
   // useGetOwnerOfTokenId,
 } from '../../hooks/useCallERC721'
+import { useGetDataNft } from '../../hooks/useFactories'
 
 export default function NFTList() {
   const context = useMysteryBox()
@@ -38,13 +38,10 @@ export default function NFTList() {
   const networkConfig = global.network[global.chainId]
 
   const boxInstance = useContract(
-    networkConfig.boxNftContract.address,
+    networkConfig.radaNftContract.address,
     'ERC721'
   )
-  const ticketInstance = useContract(
-    networkConfig.ticketNftContract.address,
-    'ERC721'
-  )
+
   const tokenPaymentInstance = useContract(networkConfig.BUSDContract.address)
   const tokenPaymentUserData = useGetBEP20(
     true,
@@ -103,7 +100,7 @@ export default function NFTList() {
     }
   }, [lastAction, success])
 
-  const actionsBox = useActions([
+  /* const actionsBox = useActions([
     {
       contractInstance: boxInstance,
       func: 'approve',
@@ -134,16 +131,16 @@ export default function NFTList() {
           break
       }
     }
-  }, [lastActionBox, successBox])
+  }, [lastActionBox, successBox]) */
 
-  const actionsTicket = useActions([
+  /* const actionsTicket = useActions([
     {
-      contractInstance: ticketInstance,
+      contractInstance: boxInstance,
       func: 'approve',
       closeDialog: false,
     },
     {
-      contractInstance: ticketInstance,
+      contractInstance: boxInstance,
       func: 'setApprovalForAll',
       closeDialog: false,
     },
@@ -167,11 +164,11 @@ export default function NFTList() {
           break
       }
     }
-  }, [lastActionTicket, successTicket])
+  }, [lastActionTicket, successTicket]) */
 
   const mysteryBoxData = useGetERC721(
     true,
-    networkConfig.boxNftContract.address,
+    networkConfig.radaNftContract.address,
     context.contractInstance?.address,
     global.network
   )
@@ -179,61 +176,35 @@ export default function NFTList() {
   // console.log(mysteryBoxData, 'mysteryBoxData')
   const mysteryBoxOwnerTokenIdData = useOwnerTokenIds(
     true,
-    networkConfig.boxNftContract.address,
+    networkConfig.radaNftContract.address,
     mysteryBoxData.balanceOf,
     global.network
   )
-  // console.log(mysteryBoxOwnerTokenIdData, 'mysteryBoxOwnerTokenIdData')
-  const mysteryBoxApproveData = useGetApproveNft(
+
+  // Get data NFT from Factories Contract
+  const boxesList = useGetDataNft(
     true,
-    networkConfig.boxNftContract.address,
+    context.contractInstance?.address,
+    networkConfig.radaNftContract,
     mysteryBoxOwnerTokenIdData,
     global.network
   )
-  // console.log(mysteryBoxApproveData, 'mysteryBoxApproveData')
 
-  const ticketData = useGetERC721(
-    true,
-    networkConfig.ticketNftContract.address,
-    context.contractInstance?.address,
-    global.network
-  )
+  // console.log(nftsData)
 
-  // console.log(ticketData, 'ticketData')
-
-  const ticketOwnerTokenIdData = useOwnerTokenIds(
-    true,
-    networkConfig.ticketNftContract.address,
-    ticketData.balanceOf,
-    global.network
-  )
-
-  // console.log(ticketOwnerTokenIdData, 'ticketOwnerTokenIdData')
-
-  const ticketApproveData = useGetApproveNft(
-    true,
-    networkConfig.ticketNftContract.address,
-    ticketOwnerTokenIdData,
-    global.network
-  )
-
-  const boxesList =
+  /* const boxesList =
     mysteryBoxOwnerTokenIdData.map((tokenId) => {
-      return NFTModel(tokenId, networkConfig.boxNftContract)
+      return NFTModel(tokenId, networkConfig.radaNftContract)
     }) ?? []
-  const defaultBox = NFTModel(0, networkConfig.boxNftContract)
-
-  const ticketsList =
-    ticketOwnerTokenIdData.map((tokenId) => {
-      return NFTModel(tokenId, networkConfig.ticketNftContract)
-    }) ?? []
+     */
+  const defaultBox = NFTModel(0, networkConfig.radaNftContract)
 
   const handleBuyNow = () => {
     global.setLoading(true)
     global.setLoadingMessage('Please confirm at MetaMask and wait in 15s - 30s')
 
     const nonce = Math.floor(Math.random() * 999999) + 100000
-    actions['buyBox'].func(nonce)
+    actions['buyBox'].func(context.campaignId, nonce)
 
     handleState('buyBox')
   }
@@ -257,32 +228,32 @@ export default function NFTList() {
     handleState('openBox')
   }
 
-  const handleApproveBox = (tokenId) => () => {
+  /* const handleApproveBox = (tokenId) => () => {
     global.setLoading(true)
     global.setLoadingMessage('Please confirm at MetaMask and wait in 15s - 30s')
     // actionsBox['setApprovalForAll'].func(context.contractInstance.address, true)
     actionsBox['approve'].func(context.contractInstance.address, tokenId)
 
     handleStateBox('approve')
-  }
+  } */
 
-  const handleApproveTicket = (tokenId) => () => {
+  /* const handleApproveTicket = (tokenId) => () => {
     global.setLoading(true)
     global.setLoadingMessage('Please confirm at MetaMask and wait in 15s - 30s')
     // actionsBox['setApprovalForAll'].func(context.contractInstance.address, true)
     actionsTicket['approve'].func(context.contractInstance.address, tokenId)
 
     handleStateTicket('approve')
-  }
+  } */
 
-  const handleClaim = (tokenId) => () => {
+  /* const handleClaim = (tokenId) => () => {
     global.setLoading(true)
     global.setLoadingMessage('Please confirm at MetaMask and wait in 15s - 30s')
     // actionsBox['setApprovalForAll'].func(context.contractInstance.address, true)
     actions['claim'].func(tokenId)
 
     handleState('claim')
-  }
+  } */
 
   if (context.isAllow === false) {
     return (
@@ -302,6 +273,7 @@ export default function NFTList() {
       </Stack>
     )
   }
+
   const nowTime = Math.floor(Date.now() / 1000)
   if (context.startTime > nowTime) {
     return (
@@ -321,9 +293,6 @@ export default function NFTList() {
       </Stack>
     )
   }
-
-  console.log(global.network)
-  console.log(global.chainId, 'chainId')
 
   const allowBuy =
     context.endTime > nowTime &&
@@ -394,42 +363,36 @@ export default function NFTList() {
         justifyContent={'center'}
         sx={{ marginBottom: 3 }}
       >
-        {boxesList.map((itemNFT) => (
-          <Grid key={`item-${itemNFT.tokenId}`} item xs={12} sm={6} lg={6}>
-            <Card>
-              <ItemNFT
-                itemNFT={itemNFT}
-                priceBox={0}
-                network={global.network}
-              />
-              <CardActions style={{ flex: 1, justifyContent: 'center' }}>
-                {!mysteryBoxApproveData[itemNFT.tokenId] && (
-                  <>
+        {boxesList
+          .filter(
+            (e) =>
+              (e.chainData.isBox && !e.chainData.used) || !e.chainData.isBox
+          )
+          .map((itemNFT) => (
+            <Grid key={`item-${itemNFT.tokenId}`} item xs={12} sm={6} lg={6}>
+              <Card>
+                <ItemNFT
+                  itemNFT={itemNFT}
+                  priceBox={0}
+                  network={global.network}
+                />
+                <CardActions style={{ flex: 1, justifyContent: 'center' }}>
+                  {itemNFT.chainData.isBox && !itemNFT.chainData.used && (
                     <Button
+                      onClick={handleOpenBox(itemNFT.tokenId)}
+                      size="small"
                       variant="contained"
                       color="secondary"
-                      onClick={handleApproveBox(itemNFT.tokenId)}
                     >
-                      Enable Box
+                      OPEN NOW
                     </Button>
-                    <ArrowForwardIcon style={{ marginLeft: 10 }} />
-                  </>
-                )}
-                <Button
-                  disabled={!mysteryBoxApproveData[itemNFT.tokenId]}
-                  onClick={handleOpenBox(itemNFT.tokenId)}
-                  size="small"
-                  variant="contained"
-                  color="secondary"
-                >
-                  OPEN NOW
-                </Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
+                  )}
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
       </Grid>
-      <Grid container spacing={3} justifyContent={'center'}>
+      {/* <Grid container spacing={3} justifyContent={'center'}>
         {ticketsList.map((itemNFT) => (
           <Grid key={`item-${itemNFT.tokenId}`} item xs={12} sm={6} lg={6}>
             <Card>
@@ -438,7 +401,7 @@ export default function NFTList() {
                 priceBox={0}
                 network={global.network}
               />
-              {/* <CardActions style={{ flex: 1, justifyContent: 'center' }}>
+              <CardActions style={{ flex: 1, justifyContent: 'center' }}>
                 {!ticketApproveData[itemNFT.tokenId] && (
                   <>
                     <Button
@@ -460,11 +423,11 @@ export default function NFTList() {
                 >
                   CLAIM NOW
                 </Button>
-              </CardActions> */}
+              </CardActions>
             </Card>
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
     </>
   )
 }

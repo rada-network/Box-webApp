@@ -6,7 +6,6 @@ import { useLocation } from 'react-router-dom'
 import useABI from 'hooks/useABI'
 import { useContractCalls } from '@usedapp/core'
 import { formatEther, formatUnits } from '@ethersproject/units'
-import config from 'config'
 
 const boxContext = createContext()
 
@@ -24,7 +23,6 @@ const ProvideMysteryBoxes = ({ children }) => {
 
   const viewPage = location.pathname.indexOf('nfts') > -1 ? 'nfts' : 'tokens'
   const provideValue = {
-    campaignId: config.campaignId,
     isAdmin: false,
     orders: [],
     totalOrder: 0,
@@ -63,23 +61,9 @@ const ProvideMysteryBoxes = ({ children }) => {
       },
       {
         ...callData,
-        ...{
-          method: 'whitelistAddresses',
-          args: [config.campaignId, global.account],
-        },
+        ...{ method: 'whitelistAddresses', args: [global.account] },
       },
       {
-        ...callData,
-        ...{ method: 'campaigns', args: [config.campaignId] },
-      },
-      {
-        ...callData,
-        ...{
-          method: 'buyersBoxTotal',
-          args: [config.campaignId, global.account],
-        },
-      },
-      /* {
         ...callData,
         ...{ method: 'totalSoldBoxes', args: [] },
       },
@@ -114,13 +98,13 @@ const ProvideMysteryBoxes = ({ children }) => {
       {
         ...callData,
         ...{ method: 'endTime', args: [] },
-      }, */
+      },
     ]
   }
 
   const contractChain = useContractCalls(chainArray).filter((a) => a) ?? []
 
-  if (contractChain.length < 4) {
+  if (contractChain.length < 10) {
     return ''
   }
   try {
@@ -135,32 +119,8 @@ const ProvideMysteryBoxes = ({ children }) => {
           case 1:
             provideValue.isAllow = chain[0]
             break
-          // campaigns
-          case 2:
-            // provideValue.campaign = chain[0]
-            provideValue.totalBoxesForSell = 100
-
-            provideValue.totalSoldBoxes = parseInt(
-              formatUnits(chain.totalSoldBox, 0)
-            )
-            provideValue.totalOpenBoxes = parseInt(
-              formatUnits(chain.totalOpenBoxes, 0)
-            )
-            provideValue.priceBox = parseInt(formatUnits(chain.priceBox, 18))
-            provideValue.maxBuyPerAddress = parseInt(
-              formatUnits(chain.maxBuyBoxPerAddress, 0)
-            )
-            provideValue.requireWhitelist = chain.requireWhitelist === true
-            if (provideValue.requireWhitelist === false)
-              provideValue.isAllow = true
-            provideValue.startTime = parseInt(formatUnits(chain.startTime, 0))
-            provideValue.endTime = parseInt(formatUnits(chain.endTime, 0))
-            break
-          case 3:
-            provideValue.totalBoxBought = parseInt(formatUnits(chain[0], 0))
-            break
           //totalSoldBoxes
-          /* case 2:
+          case 2:
             provideValue.totalSoldBoxes = parseInt(formatUnits(chain[0], 0))
             break
           //totalOpenBoxes
@@ -198,7 +158,7 @@ const ProvideMysteryBoxes = ({ children }) => {
           //endTime
           case 10:
             provideValue.endTime = parseInt(formatUnits(chain[0], 0))
-            break */
+            break
           default:
             break
         }

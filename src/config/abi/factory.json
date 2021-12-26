@@ -47,6 +47,12 @@
       },
       {
         "indexed": true,
+        "internalType": "uint16",
+        "name": "campaignId",
+        "type": "uint16"
+      },
+      {
+        "indexed": true,
         "internalType": "uint256",
         "name": "tokenId",
         "type": "uint256"
@@ -63,6 +69,12 @@
         "internalType": "address",
         "name": "buyerAddress",
         "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint16",
+        "name": "campaignId",
+        "type": "uint16"
       },
       {
         "indexed": true,
@@ -97,31 +109,6 @@
       }
     ],
     "name": "OwnershipTransferred",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "contractAddress",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "uint256[]",
-        "name": "tokenIds",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "TokenMinted",
     "type": "event"
   },
   {
@@ -170,27 +157,19 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "boxNft",
-    "outputs": [
-      {
-        "internalType": "contract IMintableERC721",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
+      },
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
     ],
-    "name": "boxesForSell",
+    "name": "allocationBoxes",
     "outputs": [
       {
         "internalType": "uint256",
@@ -203,6 +182,11 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "_campaignId",
+        "type": "uint16"
+      },
       {
         "internalType": "uint256",
         "name": "_nonce",
@@ -217,6 +201,11 @@
   {
     "inputs": [
       {
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
+      },
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -225,9 +214,9 @@
     "name": "buyersBoxTotal",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint16",
         "name": "",
-        "type": "uint256"
+        "type": "uint16"
       }
     ],
     "stateMutability": "view",
@@ -235,7 +224,7 @@
   },
   {
     "inputs": [],
-    "name": "endTime",
+    "name": "campaignCount",
     "outputs": [
       {
         "internalType": "uint256",
@@ -247,16 +236,69 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "getBoxesForSell",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "campaigns",
     "outputs": [
       {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
+        "internalType": "uint16",
+        "name": "maxBuyBoxPerAddress",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "priceBox",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "locked",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "requireWhitelist",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint64",
+        "name": "totalSoldNFT",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "totalSoldBox",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "totalOpenBoxes",
+        "type": "uint64"
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "createCampaign",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -268,12 +310,7 @@
       },
       {
         "internalType": "address",
-        "name": "_boxAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_ticketAddress",
+        "name": "_radaNftAddress",
         "type": "address"
       }
     ],
@@ -283,63 +320,32 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "maxBuyPerAddress",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "minterErc721",
-    "outputs": [
-      {
-        "internalType": "contract IMintableERC721",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      },
-      {
-        "internalType": "bytes",
-        "name": "",
-        "type": "bytes"
       }
     ],
-    "name": "onERC721Received",
+    "name": "itemsNFT",
     "outputs": [
       {
-        "internalType": "bytes4",
-        "name": "",
-        "type": "bytes4"
+        "internalType": "uint16",
+        "name": "campaignId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "bool",
+        "name": "used",
+        "type": "bool"
+      },
+      {
+        "internalType": "bool",
+        "name": "isBox",
+        "type": "bool"
       }
     ],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -388,12 +394,12 @@
   },
   {
     "inputs": [],
-    "name": "priceBox",
+    "name": "radaNft",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "contract IMintableERC721",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -404,19 +410,6 @@
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "requireWhitelist",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -440,38 +433,22 @@
   {
     "inputs": [
       {
+        "internalType": "uint16",
+        "name": "_campaignId",
+        "type": "uint16"
+      },
+      {
         "internalType": "uint256[]",
         "name": "_tokenIds",
         "type": "uint256[]"
-      }
-    ],
-    "name": "setBoxesForSell",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+      },
       {
-        "internalType": "uint256",
-        "name": "_endTime",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "isBox",
+        "type": "bool"
       }
     ],
-    "name": "setEndTime",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_limit",
-        "type": "uint256"
-      }
-    ],
-    "name": "setMaxBuyPerAddress",
+    "name": "setAllocationNFT",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -492,57 +469,10 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_price",
-        "type": "uint256"
-      }
-    ],
-    "name": "setPriceBox",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "_randomTokenIds",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "setRandomNFT",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "_allow",
-        "type": "bool"
-      }
-    ],
-    "name": "setRequireWhitelist",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_startTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "setStartTime",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+        "internalType": "uint16",
+        "name": "_campaignId",
+        "type": "uint16"
+      },
       {
         "internalType": "address[]",
         "name": "_addresses",
@@ -573,71 +503,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "startTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "ticketNft",
-    "outputs": [
-      {
-        "internalType": "contract IMintableERC721",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalBoxesForSell",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalOpenBoxes",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "totalSoldBoxes",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -646,6 +511,49 @@
       }
     ],
     "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "_campaignId",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_endTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_locked",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_priceBox",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint16",
+        "name": "_maxBuyBoxPerAddress",
+        "type": "uint16"
+      },
+      {
+        "internalType": "bool",
+        "name": "_requireWhitelist",
+        "type": "bool"
+      }
+    ],
+    "name": "updateCampaign",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -683,6 +591,29 @@
   },
   {
     "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_used",
+        "type": "bool"
+      }
+    ],
+    "name": "useNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "",
+        "type": "uint16"
+      },
       {
         "internalType": "address",
         "name": "",
