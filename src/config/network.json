@@ -2,16 +2,16 @@
   "97": {
     "factoryContract": {
       "name": "Factory Contract",
-      "address": "0xc3CDB0E92fb9594c007a5A030015C20F2caBf4C7"
+      "address": "0xAcf338C748C155d212de4BC29c86Cfa00Ce02Df6"
     },
     "radaNftContract": {
       "name": "Rada NFT",
-      "address": "0x24825D62d4658DA1d5cB517E2CB445D1A00F65C6",
+      "address": "0xe5795B0d2E635d190299F9eDF52D38F8093781D5",
       "baseURI": "https://nft.1alo.com/rada/v1/"
     },
     "BUSDContract": {
       "name": "BUSD",
-      "address": "0x862BcFA4305DD0ecF1a82796fFc9c3627E0b592a"
+      "address": "0x87F61B1C13De6954c32e2c6BE2AF6AB50fcFB182"
     }
   },
   "56": {
